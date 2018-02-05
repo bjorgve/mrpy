@@ -17,9 +17,9 @@ def waveletScaleZero(order,nr_ploy,x):
         #print("scaling(",i,",",1,",",0,",",x,")","=",sc.scaling(i, 1, 0, x) )
         #print("restult",G0[order, i]*sc.scaling(i, 1, 0, x)/np.sqrt(2) )
         #Check if this should be a pluss or minus
-        wavelet_formel = (G0[order, i]*scaling(i, 1, 0, x)) + \
+        wavelet = (G0[order, i]*scaling(i, 1, 0, x)) + \
         (G1[order, i]*scaling(i, 1, 1, x))
-        Sum += wavelet_formel
+        Sum += wavelet
     return Sum
 
 #Scaled wavelet function
