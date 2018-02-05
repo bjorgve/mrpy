@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy.polynomial.legendre as leg
 
+
+#Return the function value of the specified order
+#of the legendre polynomial defined on the area [0,1]
 def legendre_polynomial(order, x):
     coef = []
     if type(x) is float:
@@ -33,10 +36,12 @@ def legendre_polynomial(order, x):
                 coef.clear()
     return y
 
+#Returns the function value of the scale and translated
+legendre polynomial
 def scaling(order,scale, translation,x):
     return 2**(scale/2)*legendre_polynomial(order,2**scale*x-translation)
 
-
+#Returns the roots of the legendre polynomial
 def roots(order):
     coef=[]
     for n in range(0,order+1):
@@ -46,7 +51,7 @@ def roots(order):
             coef.append(0)
     return .5*(leg.legroots(coef)+1)
 
-#return a np.array
+#Returns the weights of the legendre polynomial defined on
 def weights(order):
 
     x = roots(order)
@@ -68,15 +73,18 @@ def weights(order):
             #possibly some bug here, get a factor 2 different using mathematica
     return w
 
+#Numerical approximation of the scaling functions
 def np_scaling(order,f):
     x = np.arange(0,1,.01)
 
     return .5*np.trapz(legendre_polynomial(order,x)*f(2**(-2)*x),dx=0.01)
 
-def approximated_scaling_coef(order,scale,translation,f):
+#Numerical approximation to the scaling coeffisients
+def approximatedScalingCoef(order,scale,translation,f):
     x = np.arange(0,1,.01)
     return 2**(-.5*scale)*np.trapz(legendre_polynomial(order,x)*f(2**(-scale)*(x + translation)),dx=0.01)
 
+#Returns the scaling coeffisients
 def scalingCoef(order,nr_poly,scale,translation,f):
 
     tmp = 0;
@@ -86,6 +94,7 @@ def scalingCoef(order,nr_poly,scale,translation,f):
         tmp=tmp + w[q]*f(2**(-scale)*(x[q]+translation))*legendre_polynomial(order,float(x[q]))
     return 2**(-.5*scale)*tmp
 
+#Projects a function f onto a given set of polynomials and scale
 def func_proj(scale,nr_poly,f,x):
     tmp = 0
     for j in range(0,nr_poly):
