@@ -1,6 +1,7 @@
 #This module contains approximations and brute force appoaches
 #which can be used to test more sophisticated implementations
 
+# x is used for position
 
 #Wavelet function at scale zero
 def waveletScaleZero(order,nr_ploy,x):
@@ -9,7 +10,7 @@ def waveletScaleZero(order,nr_ploy,x):
     Sum = 0
     G0 = getfilter("G", 0, nr_ploy)
     G1 = getfilter("G", 1, nr_ploy)
-  #  print(G0)
+   # print(G0)
    # print(G1)
     for i in range(nr_ploy):
         #print("G0[", order ,",",i,"]" ,"=" ,G0[order,i])
@@ -20,6 +21,7 @@ def waveletScaleZero(order,nr_ploy,x):
         (G1[order, i]*scaling(i, 1, 1, x))
         Sum += wavelet_formel
     return Sum
+
 #Scaled wavelet function
 def waveletScaled(order, scale, translation, nr_poly, x):
         return 2**(scale/2)*waveletScaleZero(order,nr_poly,(2**scale)*x-translation)
