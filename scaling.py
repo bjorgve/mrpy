@@ -5,7 +5,7 @@ import numpy.polynomial.legendre as leg
 
 #Return the function value of the specified order
 #of the legendre polynomial defined on the area [0,1]
-def legendre_polynomial(order, x):
+def legendrePolynomial(order, x):
     coef = []
     if type(x) is float:
 
@@ -37,9 +37,9 @@ def legendre_polynomial(order, x):
     return y
 
 #Returns the function value of the scale and translated
-legendre polynomial
+#legendre polynomial
 def scaling(order,scale, translation,x):
-    return 2**(scale/2)*legendre_polynomial(order,2**scale*x-translation)
+    return 2**(scale/2)*legendrePolynomial(order,2**scale*x-translation)
 
 #Returns the roots of the legendre polynomial
 def roots(order):

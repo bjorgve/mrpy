@@ -1,6 +1,8 @@
 from primitiveImplementation import *
 
+#Define the overall presision  
 eps = 0.01
+
 
 def test_IsNormOne():
     val = normWavletScaleZero(1,1)
