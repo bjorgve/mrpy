@@ -1,6 +1,6 @@
 from primitiveImplementation import *
 
-#Define the overall presision  
+#Define the overall presision
 eps = 0.01
 
 
