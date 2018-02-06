@@ -77,12 +77,12 @@ def weights(order):
 def np_scaling(order,f):
     x = np.arange(0,1,.01)
 
-    return .5*np.trapz(legendre_polynomial(order,x)*f(2**(-2)*x),dx=0.01)
+    return .5*np.trapz(legendrePolynomial(order,x)*f(2**(-2)*x),dx=0.01)
 
 #Numerical approximation to the scaling coeffisients
 def approximatedScalingCoef(order,scale,translation,f):
-    x = np.arange(0,1,.01)
-    return 2**(-.5*scale)*np.trapz(legendre_polynomial(order,x)*f(2**(-scale)*(x + translation)),dx=0.01)
+    x = np.arange(0,1,.0001)
+    return 2**(-.5*scale)*np.trapz(legendrePolynomial(order,x)*f(2**(-scale)*(x + translation)),dx=0.0001)
 
 #Returns the scaling coeffisients
 def scalingCoef(order,nr_poly,scale,translation,f):
@@ -91,7 +91,7 @@ def scalingCoef(order,nr_poly,scale,translation,f):
     w = weights(nr_poly+1)
     x = roots(nr_poly+1)
     for q in range(0,w.size):
-        tmp=tmp + w[q]*f(2**(-scale)*(x[q]+translation))*legendre_polynomial(order,float(x[q]))
+        tmp=tmp + w[q]*f(2**(-scale)*(x[q]+translation))*legendrePolynomial(order,float(x[q]))
     return 2**(-.5*scale)*tmp
 
 #Projects a function f onto a given set of polynomials and scale
@@ -107,5 +107,5 @@ def integrate_scale(scale,nr_poly,f):
     x = np.arange(0,1,0.01)
     for j in range(0,nr_poly):
         for l in range(0,2**scale):
-            tmp = tmp+scalingCoef(j,nr_poly,scale,l,f)*np.trapz(legendre_polynomial(j,x),dx=0.01)
+            tmp = tmp+scalingCoef(j,nr_poly,scale,l,f)*np.trapz(legendrePolynomial(j,x),dx=0.01)
     return tmp
