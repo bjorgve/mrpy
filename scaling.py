@@ -41,6 +41,11 @@ def legendrePolynomial(order, x):
 def scaling(order,scale, translation,x):
     return 2**(scale/2)*legendrePolynomial(order,2**scale*x-translation)
 
+def scalingVec(nr_poly,scale,translation,x):
+    tmp = np.empty(nr_poly)
+    for i in range(nr_poly):
+        tmp[i] = scaling(i,scale,translation,x)
+    return tmp
 #Returns the roots of the legendre polynomial
 def roots(order):
     coef=[]
@@ -94,8 +99,13 @@ def scalingCoef(order,nr_poly,scale,translation,f):
         tmp=tmp + w[q]*f(2**(-scale)*(x[q]+translation))*legendrePolynomial(order,float(x[q]))
     return 2**(-.5*scale)*tmp
 
+def scalingCoefVec(nr_poly,scale,translation,f):
+    tmp = np.empty(nr_poly)
+    for i in range(nr_poly):
+        tmp[i] = scalingCoef(i,nr_poly,scale,translation,f)
+    return tmp
 #Projects a function f onto a given set of polynomials and scale
-def func_proj(scale,nr_poly,f,x):
+def funcProj(scale,nr_poly,f,x):
     tmp = 0
     for j in range(0,nr_poly):
         for l in range(0,2**scale):
@@ -108,4 +118,12 @@ def integrate_scale(scale,nr_poly,f):
     for j in range(0,nr_poly):
         for l in range(0,2**scale):
             tmp = tmp+scalingCoef(j,nr_poly,scale,l,f)*np.trapz(legendrePolynomial(j,x),dx=0.01)
+    return tmp
+
+def funcProjVec(scale,nr_poly,f,x):
+    tmp = 0
+    for j in range(2**scale):
+        a = scalingCoefVec(nr_poly,scale,j,f)
+        b = scalingVec(nr_poly,scale,j,x)
+        tmp = tmp + (a*b).sum()
     return tmp
