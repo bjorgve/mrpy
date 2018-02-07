@@ -22,7 +22,7 @@ def wavelet(nr_poly,x):
     return (np.dot(G0,getScaleVec(nr_poly,1,0,x))/np.sqrt(2.0)  + \
             np.dot(G1,getScaleVec(nr_poly,1,1,x))/np.sqrt(2.0))*np.sqrt(2)
 
-def waveletScaled(scale,translation,nr_poly,x):
+def waveletScaled(nr_poly,scale,translation,x):
     G0 = getfilter("G",0,nr_poly)
     G1 = getfilter("G",1,nr_poly)
   #  print(G0)
@@ -30,7 +30,8 @@ def waveletScaled(scale,translation,nr_poly,x):
     return np.dot(G0,getScaleVec(nr_poly,scale+1,translation*2,x))  + \
             np.dot(G1,getScaleVec(nr_poly,scale+1,translation*2+1,x))
 
-def waveletScalingCoeff(scale,translation,nr_poly,f):
+def waveletCoef(nr_poly,scale,translation,f):
+    #print(nr_poly)
     G0 = getfilter("G",0,nr_poly)
     G1 = getfilter("G",1,nr_poly)
   #  print(G0)
@@ -62,3 +63,5 @@ def waveletAlp(order,nr_poly,x):
 
 if __name__ == '__main__':
     print(wavelet(1,.1))
+    print(np.sin(.1))
+    print(funcProjWavelet(4,4,np.sin,.1))
