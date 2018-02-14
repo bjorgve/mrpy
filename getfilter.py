@@ -13,15 +13,18 @@ def getfilter(type="H", flag=0, order_imp=4):
     filterArray = np.array(filterList)
     filterMatrix = np.ndarray((order_imp, order_imp), buffer=filterArray)
     if (flag == 1):
-        if (type == "G" and order_imp % 2 != 0):
-            sign_np = -1
+        if type == "G":
+            for i in range(order_imp):
+                for j in range(order_imp):
+                    filterMatrix[i, j] = \
+                        (-1)**(i+j+order_imp)*filterMatrix[i, j]
+        if type == "H":
+            for i in range(order_imp):
+                for j in range(order_imp):
+                    filterMatrix[i, j] = (-1)**(i+j+1)*filterMatrix[i, j]
+                    # According to Adaptive solutions by Alptert this should
+                    # be (-1)**(i+j). But according to experiments the current
+                    # implementation is correct.
         else:
-            sign_np = 1
-        for i in range(order_imp):
-            for j in range(order_imp):
-                sign_ij = 1
-                if (((i+j) % 2) == 0):
-                    sign_ij = -1
-                sign = sign_ij * sign_np
-                filterMatrix[i, j] *= sign
+            print("Error: not valid type")
     return filterMatrix
